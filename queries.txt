@@ -1,0 +1,65 @@
+CREATE TABLE table_a (
+    id INT,
+    name VARCHAR(50),
+    wage DECIMAL(10, 2)
+);
+
+
+INSERT INTO table_a (id, name, wage) VALUES
+(1, 'Alice', 50000.00),
+(2, 'Bob', 55000.00),
+(3, 'Charlie', 60000.00),
+(4, 'David', 65000.00);
+
+
+CREATE TABLE table_b (
+    id INT,
+    name VARCHAR(50),
+    wage DECIMAL(10, 2)
+);
+
+
+INSERT INTO table_b (id, name, wage) VALUES
+(3, 'Charlie', 60000.00),
+(4, 'David', 65000.00),
+(5, 'Eve', 70000.00),
+(6, 'Frank', 75000.00);
+
+
+ALTER TABLE table_a
+ADD COLUMN age INT;
+
+ALTER TABLE table_b
+ADD COLUMN country VARCHAR(50);
+
+-- Veja a diferença:
+SELECT youtube.table_a
+UNION -- UNION ALL
+SELECT youtube.table_b
+
+
+
+-- necessario desabilitar o "safe mode" para as queries abaixo
+-- Vá em Edit -> Preferences -> SQL Editor -> desabilitar o "Safe Updates"
+UPDATE youtube.table_a
+SET age = CASE
+    WHEN id = 1 THEN 30
+    WHEN id = 2 THEN 25
+    WHEN id = 3 THEN 35
+    WHEN id = 4 THEN 40
+    ELSE NULL
+END;
+
+UPDATE youtube.table_b
+SET country = CASE
+    WHEN id = 3 THEN 'USA'
+    WHEN id = 4 THEN 'Canada'
+    WHEN id = 5 THEN 'UK'
+    WHEN id = 6 THEN 'Australia'
+    ELSE NULL
+END;
+
+SELECT * FROM youtube.table_b
+UNION -- ALL
+SELECT * FROM youtube.table_a;
+
